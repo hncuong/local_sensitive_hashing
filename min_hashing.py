@@ -18,7 +18,7 @@ class MinHasher(object):
 
         self._ndocs = corpus.get_num_docs()
         self.token_to_docs = corpus.get_token_docs()
-        self._hashers = self.get_hasher()
+        self._hashers = self.get_hashers()
     
     def get_hashers(self):
         print("Generate {} random bucker hashers".format(self._k))
@@ -38,7 +38,7 @@ class MinHasher(object):
             # DO perm hash functions for this row
             hrs = []
             for i in range(self._k):
-                hasher = self._hashers(i)
+                hasher = self._hashers[i]
                 hrs.append(hasher(token))
             
             # For doc contain token id r
