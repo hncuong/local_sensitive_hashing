@@ -32,7 +32,7 @@ class LocalSensitiveHashing(object):
                 self.buckets[bucid][band].append(docid)
 
                 # If len == 2: bucket shared
-                if len(self.buckets[bucid][band].append(docid)) == 2:
+                if len(self.buckets[bucid][band]) == 2:
                     self.share_signatures[bucid].append(band)
 
         # Constructing doc that close to each other.
