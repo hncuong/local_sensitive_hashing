@@ -40,7 +40,7 @@ def md5_hashing(s):
     
     return val
 
-def random_hasher_integer(big_num):
+def random_hasher(big_num):
     def hashing(n):
         n = str(n)
         val = md5_hashing(n)
@@ -48,8 +48,8 @@ def random_hasher_integer(big_num):
         return val
     return hashing
 
-def gen_random_int_hasher(k):
+def gen_random_hasher(k):
     """k : number of hasher."""
     big_nums = np.random.randint(int(1e9), int(2e9), k)
-    return [random_hasher_integer(big_num) for big_num in big_nums]
+    return [random_hasher(big_num) for big_num in big_nums]
     

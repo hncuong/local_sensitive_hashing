@@ -1,5 +1,5 @@
 import numpy as np
-from utils import choose_random_pseudo_perm_hasher, gen_random_int_hasher
+from utils import choose_random_pseudo_perm_hasher, gen_random_hasher
 from corpus import Corpus
 
 MAX_INT = 2**31 - 1
@@ -17,35 +17,35 @@ class MinHasher(object):
         self._k = k
 
         self._ndocs = corpus.get_num_docs()
-        self.idx_docs = corpus.get_idx_docs()
+        self.token_to_docs = corpus.get_token_docs()
         self._hashers = self.get_hasher()
     
     def get_hashers(self):
         print("Generate {} random bucker hashers".format(self._k))
-        return gen_random_int_hasher(self._k)
+        return gen_random_hasher(self._k)
 
     def pseudo_perm_hasher(self):
         """Pseudo permutation hashing. MIN HASHING
-        Return: k * ndocs matrix. Each value in range [0, cool_prime - 1]
+        Return: ndocs * k matrix. Each value in range [0, cool_prime - 1]
         """
         # Do k hashing 
         # signatures = np.full((self._k, self._ndocs), MAX_INT, dtype=np.int32)
-        signatures = [[MAX_INT] * self._k for _ in range(self._ndocs)]
+        signatures = [[MAX_INT] * self._k for _ in range(self._ndocs)] # n_docs * k
 
         # For each row
-        for r in range(len(self.idx_docs)):
+        for token, docs_id in self.token_to_docs.items():
 
             # DO perm hash functions for this row
             hrs = []
             for i in range(self._k):
                 hasher = self._hashers(i)
-                hrs.append(hasher(r))
+                hrs.append(hasher(token))
             
             # For doc contain token id r
-            for doc_id in self.idx_docs[r]:
+            for doc_id in docs_id:
                 for hidx, hr in enumerate(hrs):
-                    if hr < signatures[hidx][doc_id]:
-                        signatures[hidx][doc_id] = hr
+                    if hr < signatures[doc_id][hidx]:
+                        signatures[doc_id][hidx] = hr
 
         return signatures
 
