@@ -7,7 +7,7 @@ MAX_INT = 2**31 - 1
 class MinHasher(object):
     """Min hashing list of sets"""
 
-    def __init__(self, corpus, k=100):
+    def __init__(self, corpus, k=200):
         """
         - k: # "permute" hash functions. Default 100.
         - corpus: documents as Corpus object.
