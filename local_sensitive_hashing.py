@@ -6,8 +6,10 @@ class LocalSensitiveHashing(object):
         """ Local sensitive hashing
         Return: 
         - signatures: min hash signatures. Size ndocs * k matrix. Each value in range [0, cool_prime - 1]
-        - n_bucket: Number of bucket to hash each band into. Select here 
-        http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php
+        - n_bucket: Number of bucket to hash each band into. Select here
+        - row_p_band: number of rows per band. NUmband = total_rows // row_p_band
+        Refer to this
+        https://medium.com/engineering-brainly/locality-sensitive-hashing-explained-304eb39291e4
         """
         self._signatures = signatures
         self._n_docs = len(signatures)

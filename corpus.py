@@ -14,12 +14,20 @@ class Corpus(object):
         """Remap index to 0 -> num shingles"""
         print("Remap token to index from 0 -> len(token)")
         token_to_docs = defaultdict(list)
+        token_to_idxs = {}
+        cnt = 0
 
         for doc_id, doc in enumerate(self._docs):
             new_doc = []
 
             for token in doc:
-                token_to_docs[token].append(doc_id)
+                if token in token_to_idxs:
+                    idx = token_to_idxs[token]
+                else:
+                    token_to_idxs[token] = cnt
+                    idx = cnt
+                    cnt += 1
+                token_to_docs[idx].append(doc_id)
 
         print("Number of shingles = {}".format(len(token_to_docs)))
         return token_to_docs
